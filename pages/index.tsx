@@ -13,11 +13,25 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { PrismaClient } from '@prisma/client';
 import { usePathname } from 'next/navigation';
+import { SessionProvider, useSession } from 'next-auth/react';
 
-export default function Home() {
-  const currentLink = usePathname();
-  console.log(currentLink);
+export async function getServerSideProps() {
+  const prisma = new PrismaClient();
+  const users = await prisma.user.findMany();
+  return {
+    props: {
+      title: 'Home',
+      description: 'Home page',
+      // users,
+    },
+  };
+}
+
+export default function Home({ users }: any) {
+  // const currentLink = usePathname();
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -30,14 +44,14 @@ export default function Home() {
               <BreadcrumbItem className='hidden md:block'>
                 <BreadcrumbLink href='#'>GastoControl</BreadcrumbLink>
               </BreadcrumbItem>
-              {currentLink && (
+              {/* {currentLink && (
                 <>
                   <BreadcrumbSeparator className='hidden md:block' />
                   <BreadcrumbItem className='hidden md:block'>
                     <BreadcrumbLink href='#'>GastoControl</BreadcrumbLink>
                   </BreadcrumbItem>
                 </>
-              )}
+              )} */}
             </BreadcrumbList>
           </Breadcrumb>
         </header>
