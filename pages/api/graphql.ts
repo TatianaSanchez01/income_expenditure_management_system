@@ -1,33 +1,55 @@
-import { ApolloServer } from '@apollo/server';
-import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import { makeExecutableSchema } from '@graphql-tools/schema';
-import { gql } from 'graphql-tag';
+import 'reflect-metadata';
+import 'ts-tiny-invariant';
+import { ApolloServer } from 'apollo-server-micro';
 
-const typeDefs = gql`
-  type Query {
-    users: [User!]!
-  }
+import { PrismaClient } from '@prisma/client';
+import prisma from '@/config/prisma';
+import Cors from 'micro-cors';
 
-  type User {
-    name: String
-    username: String
-  }
-`;
+import { IncomingMessage, ServerResponse } from 'http';
+import { customTypes } from '@/graphql/custom/types';
+import { customResolvers } from '@/graphql/custom/resolvers';
+import { types } from '@/prisma/generated/graphql/types';
+import { resolvers } from '@/prisma/generated/graphql/resolvers';
 
-const users = [{ name: 'Foo Bar', username: 'foobar' }];
+const cors = Cors({
+  allowMethods: ['POST', 'OPTIONS', 'GET', 'HEAD'],
+});
 
-const resolvers = {
-  Query: {
-    users() {
-      return users;
-    },
+interface Context {
+  prisma: PrismaClient;
+}
+
+export const config = {
+  api: {
+    bodyParser: false,
   },
 };
 
-export const schema = makeExecutableSchema({ typeDefs, resolvers });
+const functionHandler = async (
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>
+) => {
+  const apolloServer = new ApolloServer({
+    context: (): Context => ({ prisma }),
+    typeDefs: [...types, ...customTypes],
+    resolvers: [...resolvers, ...customResolvers],
+    persistedQueries: false,
+    cache: 'bounded',
+    introspection: process.env.NODE_ENV !== 'production',
+  });
+  const startServer = apolloServer.start();
+  await startServer;
+  return apolloServer.createHandler({
+    path: '/api/graphql',
+  })(req, res);
+};
 
-const server = new ApolloServer({
-  schema,
+export default cors((req, res) => {
+  if (req.method === 'OPTIONS') {
+    res.end();
+    return false;
+  }
+
+  return functionHandler(req, res);
 });
-
-export default startServerAndCreateNextHandler(server);

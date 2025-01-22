@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/sidebar';
 import { PrismaClient } from '@prisma/client';
 import { usePathname } from 'next/navigation';
-import { SessionProvider, useSession } from 'next-auth/react';
 
 export async function getServerSideProps() {
   const prisma = new PrismaClient();
