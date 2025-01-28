@@ -27,7 +27,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { nanoid } from 'nanoid';
-import { createUser } from '@/utils/api';
+import { createUser, postEmail } from '@/utils/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'react-toastify';
 import { useToast } from '@/hooks/use-toast';
@@ -107,6 +107,13 @@ const Index = ({ id }: { id: string }) => {
               },
             },
           });
+
+          await postEmail({
+            email: user.email,
+            name: user.name,
+            password: password,
+          });
+
           toast({
             variant: 'default',
             title: 'Usuario creado con éxito.',

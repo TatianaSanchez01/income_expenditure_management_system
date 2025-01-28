@@ -67,3 +67,9 @@ export const createUser = (data: any) => {
   const body = { data };
   return makeJSONPost(url, body, { headers: {} });
 };
+
+export const postEmail = (data : any) => {
+  const url = `/api/useremail`;
+  const headers = {};
+  return makeJSONPost(url, data, { headers });
+}
