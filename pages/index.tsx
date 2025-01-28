@@ -1,61 +1,36 @@
-import { AppSidebar } from '@/components/molecules/app-sidebar';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { Separator } from '@/components/ui/separator';
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from '@/components/ui/sidebar';
-import { PrismaClient } from '@prisma/client';
-import { usePathname } from 'next/navigation';
+import HomeCard from '@/components/molecules/HomeCard';
 
-export async function getServerSideProps() {
-  const prisma = new PrismaClient();
-  const users = await prisma.user.findMany();
-  return {
-    props: {
-      title: 'Home',
-      description: 'Home page',
-      // users,
-    },
-  };
-}
+const pages = [
+  {
+    title: 'Sistema de Gestión de Ingresos y Gastos',
+    description: 'Panel principal para la gestión de ingresos y egresos.',
+    url: '/ingresos-gastos',
+  },
 
-export default function Home({ users }: any) {
-  // const currentLink = usePathname();
+  {
+    title: 'Gestión de Usuarios',
+    description: 'Sección para administrar los usuarios del sistema.',
+    url: '/usuarios',
+  },
 
+  {
+    title: 'Reportes',
+    description: 'Sección para visualizar reportes y estadísticas.',
+    url: '/reportes',
+  },
+];
+
+export default function Home() {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className='flex h-16 shrink-0 items-center gap-2 border-b px-4'>
-          <SidebarTrigger className='-ml-1' />
-          <Separator orientation='vertical' className='mr-2 h-4' />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem className='hidden md:block'>
-                <BreadcrumbLink href='#'>GastoControl</BreadcrumbLink>
-              </BreadcrumbItem>
-              {/* {currentLink && (
-                <>
-                  <BreadcrumbSeparator className='hidden md:block' />
-                  <BreadcrumbItem className='hidden md:block'>
-                    <BreadcrumbLink href='#'>GastoControl</BreadcrumbLink>
-                  </BreadcrumbItem>
-                </>
-              )} */}
-            </BreadcrumbList>
-          </Breadcrumb>
-        </header>
-        <div className='flex flex-1 flex-col gap-4 p-4'>Texto interno</div>
-      </SidebarInset>
-    </SidebarProvider>
+    <>
+      {pages.map((page) => (
+        <HomeCard
+          key={page.title}
+          title={page.title}
+          description={page.description}
+          url={page.url}
+        />
+      ))}
+    </>
   );
 }

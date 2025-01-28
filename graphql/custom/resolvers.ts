@@ -1,5 +1,6 @@
-import { CalculadoraResolvers } from "./calculadora/resolvers";
+import { TransactionCustomResolvers } from "./transactions/resolvers";
+import { UserCustomResolvers } from "./users/resolvers";
 
-const customResolvers = [CalculadoraResolvers];
+const customResolvers = [UserCustomResolvers, TransactionCustomResolvers];
 
 export { customResolvers };

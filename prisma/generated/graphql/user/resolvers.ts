@@ -1,4 +1,4 @@
-import prisma from '@/config/prisma';
+import prisma from 'config/prisma';
 
 const UserResolvers = {
   User: {
@@ -17,6 +17,19 @@ const UserResolvers = {
     },
     sessions: async (parent: any, _: any) => {
       return await prisma.session.findMany({
+        where: {
+          user: {
+            is: {
+              id: {
+                equals: parent.id,
+              },
+            },
+          },
+        },
+      });
+    },
+    transactions: async (parent: any, _: any) => {
+      return await prisma.transaction.findMany({
         where: {
           user: {
             is: {

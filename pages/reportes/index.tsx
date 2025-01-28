@@ -1,6 +1,12 @@
-import React from 'react';
+import Reportes from '@/components/features/Reportes';
+import React, { useState } from 'react';
 
 const Index = () => {
-  return <div>Reportes</div>;
+  const [amount, setAmount] = useState(0);
+  return (
+    <div>
+      <Reportes />
+    </div>
+  );
 };
 export default Index;

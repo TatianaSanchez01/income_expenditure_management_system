@@ -9,8 +9,13 @@ const UserTypes = gql`
     image: String
     accounts: [Account]
     sessions: [Session]
+    transactions: [Transaction]
+    role: Enum_RoleName!
+    phone: String
     createdAt: DateTime!
     updatedAt: DateTime!
+    deleted: Boolean!
+    enabled: Boolean!
   }
 
   type Query {
@@ -23,6 +28,10 @@ const UserTypes = gql`
     email: String!
     emailVerified: DateTime
     image: String
+    role: Enum_RoleName!
+    phone: String
+    deleted: Boolean!
+    enabled: Boolean!
   }
 
   input UserWhereUniqueInput {
@@ -34,6 +43,10 @@ const UserTypes = gql`
     email: StringInput
     emailVerified: DateTimeInput
     image: StringInput
+    role: Enum_RoleNameInput
+    phone: StringInput
+    deleted: BooleanInput
+    enabled: BooleanInput
   }
 
   type Mutation {

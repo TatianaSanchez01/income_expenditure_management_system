@@ -3,6 +3,7 @@ import { UserTypes } from './user/types';
 import { AccountTypes } from './account/types';
 import { SessionTypes } from './session/types';
 import { VerificationTokenTypes } from './verificationtoken/types';
+import { TransactionTypes } from './transaction/types';
 
 const genericTypes = gql`
   scalar DateTime
@@ -36,4 +37,5 @@ export const types = [
   AccountTypes,
   SessionTypes,
   VerificationTokenTypes,
+  TransactionTypes,
 ];
