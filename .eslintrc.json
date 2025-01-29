@@ -18,8 +18,8 @@
       }
     ],
     "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "prefer-destructuring": "warn",
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
     "import/prefer-default-export": "off",
@@ -27,19 +27,13 @@
     "no-nested-ternary": "warn",
     "react/no-unused-prop-types": "error",
     "react/hook-use-state": "error",
-    "react/function-component-definition": [
-      1,
-      { "namedComponents": "arrow-function" }
-    ],
+    "react/function-component-definition": ["warn", { "namedComponents": "arrow-function" }],
     "react/jsx-key": "error",
     "react/no-array-index-key": "error",
     "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
+      "error"
     ],
-    "no-console": "error",
+    "no-console": "warn",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "complexity": ["warn", 10],

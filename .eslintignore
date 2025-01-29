@@ -7,7 +7,7 @@ tailwind.config.ts
 
 node_modules/**
 
-components/AtomicDesign/Atoms/Shadcn/*
+components/ui/*
 
 jest.config.ts
 
