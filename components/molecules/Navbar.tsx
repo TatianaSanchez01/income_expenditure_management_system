@@ -1,22 +1,11 @@
 import React from 'react';
-import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import {
   CircleUser,
-  HandCoins,
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  Search,
-  ShoppingCart,
-  Users,
+
 } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
+
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,34 +14,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '../ui/breadcrumb';
 
-const data = {
-  navMain: [
-    {
-      title: 'Sistema de Gestión de Ingresos y Gastos',
-      url: '#',
-      items: [
-        {
-          title: 'Ingresos y egresos',
-          url: '/ingresos-egresos',
-        },
-        {
-          title: 'Usuarios',
-          url: '/usuarios',
-        },
-        {
-          title: 'Reportes',
-          url: '/reportes',
-        },
-      ],
-    },
-  ],
-};
-
-const Navbar = () => {
+const Navbar = () => {  
   return (
     <header className='flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
       <div className='w-full flex-1'>

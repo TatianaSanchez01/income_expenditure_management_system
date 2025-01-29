@@ -31,6 +31,7 @@ import { createUser, postEmail } from '@/utils/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'react-toastify';
 import { useToast } from '@/hooks/use-toast';
+import { useSession } from 'next-auth/react';
 
 const FormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -50,6 +51,7 @@ const Index = ({ id }: { id: string }) => {
   const isNewUser = id === 'new';
   const router = useRouter();
   const { toast } = useToast();
+  const { data: session, status } = useSession() as any;
 
   const [userData, setUserData] = useState<{
     name: string;
@@ -128,6 +130,7 @@ const Index = ({ id }: { id: string }) => {
           title: 'Uh oh! Something went wrong.',
           description: 'There was a problem with your request.',
         });
+        router.push('/usuarios');
       }
     } else {
       await userUpdateMutation({
@@ -175,6 +178,33 @@ const Index = ({ id }: { id: string }) => {
   const handleRedirect = () => {
     router.push('/usuarios');
   };
+
+  if (status === 'loading') {
+    return (
+      <div className='flex items-center justify-center'>
+        <ReactLoading
+          type='bubbles'
+          color='#3B82F6'
+          height={'20%'}
+          width={'20%'}
+        />
+      </div>
+    );
+  }
+
+  if (session?.user?.role !== 'ADMIN') {
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 3000);
+
+    return (
+      <div className='flex items-center justify-center'>
+        <h1 className='text-4xl text-gray-500'>
+          No tienes permisos para acceder a esta página. Redirigiendo...
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className='flex gap-5'>

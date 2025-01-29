@@ -42,7 +42,7 @@ export async function getServerSideProps(context: { params: { id: string } }) {
 
 const Index = ({ id }: { id: string }) => {
   const isNewTransaction = id === 'new';
-  const session = useSession();
+  const { data: session, status } = useSession() as any;
   const { toast } = useToast();
   const router = useRouter();
   const [userId, setUserId] = useState<string | null>(null);
@@ -94,7 +94,7 @@ const Index = ({ id }: { id: string }) => {
     if (id !== 'new') {
       getTransaction({ variables: { transactionId: id } });
     } else {
-      getUserByEmail({ variables: { email: session.data?.user?.email } });
+      getUserByEmail({ variables: { email: session?.user?.email } });
     }
   }, [id]);
 
@@ -170,6 +170,33 @@ const Index = ({ id }: { id: string }) => {
   const handleRedirect = () => {
     router.push('/ingresos-gastos');
   };
+
+  if (status === 'loading') {
+    return (
+      <div className='flex items-center justify-center'>
+        <ReactLoading
+          type='bubbles'
+          color='#3B82F6'
+          height={'20%'}
+          width={'20%'}
+        />
+      </div>
+    );
+  }
+
+  if (session?.user?.role !== 'ADMIN') {
+    setTimeout(() => {
+      window.location.href = '/ingresos-gastos';
+    }, 3000);
+
+    return (
+      <div className='flex items-center justify-center'>
+        <h1 className='text-4xl text-gray-500'>
+          No tienes permisos para acceder a esta página. Redirigiendo...
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className='flex gap-5'>

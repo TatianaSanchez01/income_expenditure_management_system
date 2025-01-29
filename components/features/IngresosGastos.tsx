@@ -28,6 +28,7 @@ import { DELETE_TRANSACTION } from '@/utils/gql/mutations/transactions';
 import { formatDate } from '@/utils/formatDate';
 import { formatAmount } from '@/utils/formatAmount';
 import { useToast } from '@/hooks/use-toast';
+import Private from '../organism/Private';
 
 function IngresosGastos() {
   const { toast } = useToast();
@@ -91,14 +92,16 @@ function IngresosGastos() {
           <CardTitle>Ingresos y Gastos</CardTitle>
           <CardDescription>Lista de ingresos y gastos </CardDescription>
         </div>
-        <Button
-          onClick={() => router.push('/ingresos-gastos/new')}
-          className='px-7 flex gap-4'
-          variant='default'
-        >
-          Nuevo
-          <PackagePlus />
-        </Button>
+        <Private allowedRoles={['ADMIN']}>
+          <Button
+            onClick={() => router.push('/ingresos-gastos/new')}
+            className='px-7 flex gap-4'
+            variant='default'
+          >
+            Nuevo
+            <PackagePlus />
+          </Button>
+        </Private>
       </CardHeader>
       <CardContent>
         <Table>
@@ -108,7 +111,9 @@ function IngresosGastos() {
               <TableHead className='hidden sm:table-cell'>Monto</TableHead>
               <TableHead className='hidden sm:table-cell'>Fecha</TableHead>
               <TableHead className='hidden sm:table-cell'>Usuario</TableHead>
-              <TableHead className='hidden sm:table-cell'>Acciones</TableHead>
+              <Private allowedRoles={['ADMIN']}>
+                <TableHead className='hidden sm:table-cell'>Acciones</TableHead>
+              </Private>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -134,24 +139,28 @@ function IngresosGastos() {
                     {data.user.name}
                   </Badge>
                 </TableCell>
-                <TableCell className='hidden md:table-cell'>
-                  <div className='flex flex-row gap-5'>
-                    <Badge
-                      onClick={() => router.push(`/ingresos-gastos/${data.id}`)}
-                      className='text-xs justify-center w-24 cursor-pointer'
-                      variant='default'
-                    >
-                      Edit
-                    </Badge>
-                    <Badge
-                      className='text-xs justify-center w-24 cursor-pointer'
-                      variant='default'
-                      onClick={() => onDelete(data.id)}
-                    >
-                      Delete
-                    </Badge>
-                  </div>
-                </TableCell>
+                <Private allowedRoles={['ADMIN']}>
+                  <TableCell className='hidden md:table-cell'>
+                    <div className='flex flex-row gap-5'>
+                      <Badge
+                        onClick={() =>
+                          router.push(`/ingresos-gastos/${data.id}`)
+                        }
+                        className='text-xs justify-center w-24 cursor-pointer'
+                        variant='default'
+                      >
+                        Edit
+                      </Badge>
+                      <Badge
+                        className='text-xs justify-center w-24 cursor-pointer'
+                        variant='default'
+                        onClick={() => onDelete(data.id)}
+                      >
+                        Delete
+                      </Badge>
+                    </div>
+                  </TableCell>
+                </Private>
               </TableRow>
             ))}
           </TableBody>
