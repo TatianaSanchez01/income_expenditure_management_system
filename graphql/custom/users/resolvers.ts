@@ -1,4 +1,4 @@
-import prisma from '@/config/prisma';
+import prisma from '@/config/prisma'
 
 const UserCustomResolvers = {
   User: {},
@@ -8,16 +8,16 @@ const UserCustomResolvers = {
         where: {
           email: args.email,
         },
-      });
+      })
     },
   },
   Mutation: {
     createUserCustom: async (_: any, args: any) => {
       return await prisma.user.create({
         data: args.data,
-      });
+      })
     },
   },
-};
+}
 
-export { UserCustomResolvers };
+export { UserCustomResolvers }

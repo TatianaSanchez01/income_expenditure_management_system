@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   ChartConfig,
   ChartContainer,
@@ -6,37 +6,37 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from '../ui/chart';
-import { Bar, BarChart, XAxis } from 'recharts';
-import { ChartData } from '../features/Reportes';
+} from '../ui/chart'
+import { Bar, BarChart, XAxis } from 'recharts'
+import { ChartData } from '../features/Reportes'
 
 interface ReportChartProps {
-  chartData: ChartData[];
+  chartData: ChartData[]
 }
 
 type GroupedData = {
-  month: string;
-  ingresos: number;
-  gastos: number;
-};
+  month: string
+  ingresos: number
+  gastos: number
+}
 
 function ReportChart({ chartData }: ReportChartProps) {
   // Agrupar las transacciones por mes
   const groupedData = chartData.reduce<GroupedData[]>((acc, item) => {
     // Extraemos el año y el mes de la fecha
-    const [day, month, year] = item.date.split('/');
-    const monthYear = `${year}-${month}`; // Formato 'YYYY-MM'
+    const [day, month, year] = item.date.split('/')
+    const monthYear = `${year}-${month}` // Formato 'YYYY-MM'
 
     // Verificamos si ya existe un grupo para ese mes
-    const existing = acc.find((entry) => entry.month === monthYear);
+    const existing = acc.find((entry) => entry.month === monthYear)
 
     if (existing) {
       // Si es un ingreso (positivo), lo sumamos a ingresos
       if (item.amount > 0) {
-        existing.ingresos = (existing.ingresos || 0) + item.amount;
+        existing.ingresos = (existing.ingresos || 0) + item.amount
       } else {
         // Si es un gasto (negativo), lo sumamos a gastos (como valor absoluto)
-        existing.gastos = (existing.gastos || 0) + Math.abs(item.amount);
+        existing.gastos = (existing.gastos || 0) + Math.abs(item.amount)
       }
     } else {
       // Si no existe un grupo para ese mes, lo creamos
@@ -44,16 +44,16 @@ function ReportChart({ chartData }: ReportChartProps) {
         month: monthYear, // 'YYYY-MM'
         ingresos: item.amount > 0 ? item.amount : 0,
         gastos: item.amount < 0 ? Math.abs(item.amount) : 0,
-      });
+      })
     }
 
-    return acc;
-  }, []);
+    return acc
+  }, [])
 
   // Ordenamos los datos por mes (YYYY-MM)
   groupedData.sort((a, b) => {
-    return a.month > b.month ? 1 : -1;
-  });
+    return a.month > b.month ? 1 : -1
+  })
 
   const chartConfig = {
     ingresos: {
@@ -64,28 +64,28 @@ function ReportChart({ chartData }: ReportChartProps) {
       label: 'Gastos',
       color: '#e11d48', // Red 600
     },
-  } satisfies ChartConfig;
+  } satisfies ChartConfig
 
   return (
-    <ChartContainer className='min-h-[300px] w-full' config={chartConfig}>
+    <ChartContainer className="min-h-[300px] w-full" config={chartConfig}>
       <BarChart data={groupedData} accessibilityLayer>
         <XAxis
-          dataKey='month'
+          dataKey="month"
           tickLine={false}
           tickMargin={10}
           axisLine={false}
           tickFormatter={(value) => {
-            const [year, month] = value.split('-');
-            return `${month}/${year}`;
+            const [year, month] = value.split('-')
+            return `${month}/${year}`
           }}
         />
         <ChartTooltip content={<ChartTooltipContent />} />
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar dataKey='ingresos' fill={chartConfig.ingresos.color} radius={10} />
-        <Bar dataKey='gastos' fill={chartConfig.gastos.color} radius={10} />
+        <Bar dataKey="ingresos" fill={chartConfig.ingresos.color} radius={10} />
+        <Bar dataKey="gastos" fill={chartConfig.gastos.color} radius={10} />
       </BarChart>
     </ChartContainer>
-  );
+  )
 }
 
-export default ReportChart;
+export default ReportChart

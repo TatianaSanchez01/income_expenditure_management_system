@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-import { useLazyQuery, useMutation } from '@apollo/client';
-import { GET_USER_BY_ID } from '@/utils/gql/queries/users';
-import { CREATE_USER, UPDATE_USER } from '@/utils/gql/mutations/users';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
+import { useLazyQuery, useMutation } from '@apollo/client'
+import { GET_USER_BY_ID } from '@/utils/gql/queries/users'
+import { CREATE_USER, UPDATE_USER } from '@/utils/gql/mutations/users'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -15,9 +15,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import ReactLoading from 'react-loading';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import ReactLoading from 'react-loading'
 import {
   Select,
   SelectContent,
@@ -25,72 +25,72 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { nanoid } from 'nanoid';
-import { createUser, postEmail } from '@/utils/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { toast } from 'react-toastify';
-import { useToast } from '@/hooks/use-toast';
-import { useSession } from 'next-auth/react';
+} from '@/components/ui/select'
+import { nanoid } from 'nanoid'
+import { createUser, postEmail } from '@/utils/api'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { toast } from 'react-toastify'
+import { useToast } from '@/hooks/use-toast'
+import { useSession } from 'next-auth/react'
 
 const FormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Invalid email').optional(),
   phone: z.string().optional(),
   role: z.enum(['USER', 'ADMIN']),
-});
+})
 
 export async function getServerSideProps(context: { params: { id: string } }) {
-  const id = context.params.id;
+  const id = context.params.id
   return {
     props: { id },
-  };
+  }
 }
 
 const Index = ({ id }: { id: string }) => {
-  const isNewUser = id === 'new';
-  const router = useRouter();
-  const { toast } = useToast();
-  const { data: session, status } = useSession() as any;
+  const isNewUser = id === 'new'
+  const router = useRouter()
+  const { toast } = useToast()
+  const { data: session, status } = useSession() as any
 
   const [userData, setUserData] = useState<{
-    name: string;
-    email?: string;
-    phone?: string;
-    role: 'USER' | 'ADMIN';
+    name: string
+    email?: string
+    phone?: string
+    role: 'USER' | 'ADMIN'
   }>({
     name: '',
     email: '',
     phone: '',
     role: 'USER',
-  });
+  })
 
   const [getUser, { loading: queryLoading }] = useLazyQuery(GET_USER_BY_ID, {
     fetchPolicy: 'network-only',
     onCompleted(data) {
-      setUserData(data.user);
+      setUserData(data.user)
     },
-  });
+  })
 
-  const [userCreateMutation] = useMutation(CREATE_USER);
+  const [userCreateMutation] = useMutation(CREATE_USER)
   const [userUpdateMutation, { loading: mutationLoading }] =
-    useMutation(UPDATE_USER);
+    useMutation(UPDATE_USER)
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: userData,
-  });
+  })
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
     if (isNewUser) {
-      const password = nanoid();
+      const password = nanoid()
       try {
         await createUser({
           name: values.name,
           email: values.email,
           password: password,
         }).then(async (res) => {
-          const user = res.usuario;
+          const user = res.usuario
           await userCreateMutation({
             variables: {
               data: {
@@ -108,29 +108,29 @@ const Index = ({ id }: { id: string }) => {
                 image: user.picture,
               },
             },
-          });
+          })
 
           await postEmail({
             email: user.email,
             name: user.name,
             password: password,
-          });
+          })
 
           toast({
             variant: 'default',
             title: 'Usuario creado con éxito.',
             description: `El usuario ${values.name} ha sido creado correctamente.`,
-          });
-          router.push('/usuarios');
-        });
+          })
+          router.push('/usuarios')
+        })
       } catch (e) {
-        console.error(e);
+        console.error(e)
         toast({
           variant: 'destructive',
           title: 'Uh oh! Something went wrong.',
           description: 'There was a problem with your request.',
-        });
-        router.push('/usuarios');
+        })
+        router.push('/usuarios')
       }
     } else {
       await userUpdateMutation({
@@ -141,86 +141,86 @@ const Index = ({ id }: { id: string }) => {
             role: { set: values.role },
           },
         },
-      });
+      })
       toast({
         variant: 'default',
         title: 'Usuario actualizado con éxito.',
         description: `El usuario ${values.name} ha sido actualizado correctamente.`,
-      });
+      })
     }
   }
 
   useEffect(() => {
     if (!isNewUser) {
-      getUser({ variables: { userId: id } });
+      getUser({ variables: { userId: id } })
     }
-  }, [id]);
+  }, [id])
 
   useEffect(() => {
     if (userData) {
-      form.reset(userData);
+      form.reset(userData)
     }
-  }, [userData, form]);
+  }, [userData, form])
 
   if (queryLoading || mutationLoading) {
     return (
-      <div className='flex items-center justify-center'>
+      <div className="flex items-center justify-center">
         <ReactLoading
-          type='bubbles'
-          color='#3B82F6'
+          type="bubbles"
+          color="#3B82F6"
           height={'20%'}
           width={'20%'}
         />
       </div>
-    );
+    )
   }
 
   const handleRedirect = () => {
-    router.push('/usuarios');
-  };
+    router.push('/usuarios')
+  }
 
   if (status === 'loading') {
     return (
-      <div className='flex items-center justify-center'>
+      <div className="flex items-center justify-center">
         <ReactLoading
-          type='bubbles'
-          color='#3B82F6'
+          type="bubbles"
+          color="#3B82F6"
           height={'20%'}
           width={'20%'}
         />
       </div>
-    );
+    )
   }
 
   if (session?.user?.role !== 'ADMIN') {
     setTimeout(() => {
-      window.location.href = '/';
-    }, 3000);
+      window.location.href = '/'
+    }, 3000)
 
     return (
-      <div className='flex items-center justify-center'>
-        <h1 className='text-4xl text-gray-500'>
+      <div className="flex items-center justify-center">
+        <h1 className="text-4xl text-gray-500">
           No tienes permisos para acceder a esta página. Redirigiendo...
         </h1>
       </div>
-    );
+    )
   }
 
   return (
-    <div className='flex gap-5'>
-      <Card className='w-full h-fit bg-white shadow-lg rounded-lg border border-gray-200'>
-        <CardHeader className=' px-6 py-5'>
-          <CardTitle className='text-xl font-bold text-gray-800'>
+    <div className="flex gap-5">
+      <Card className="w-full h-fit bg-white shadow-lg rounded-lg border border-gray-200">
+        <CardHeader className=" px-6 py-5">
+          <CardTitle className="text-xl font-bold text-gray-800">
             {isNewUser ? 'Agregar un nuevo usuario' : 'Editar usuario'}
           </CardTitle>
         </CardHeader>
-        <CardContent className='px-6'>
+        <CardContent className="px-6">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               {/* Name Field */}
               <FormField
                 control={form.control}
-                name='name'
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Nombre</FormLabel>
@@ -236,12 +236,12 @@ const Index = ({ id }: { id: string }) => {
               {isNewUser && (
                 <FormField
                   control={form.control}
-                  name='email'
+                  name="email"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Correo electrónico</FormLabel>
                       <FormControl>
-                        <Input {...field} type='email' />
+                        <Input {...field} type="email" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -253,7 +253,7 @@ const Index = ({ id }: { id: string }) => {
               {isNewUser && (
                 <FormField
                   control={form.control}
-                  name='phone'
+                  name="phone"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Teléfono</FormLabel>
@@ -269,7 +269,7 @@ const Index = ({ id }: { id: string }) => {
               {/* Role Field */}
               <FormField
                 control={form.control}
-                name='role'
+                name="role"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Rol</FormLabel>
@@ -278,13 +278,13 @@ const Index = ({ id }: { id: string }) => {
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
-                        <SelectTrigger className='w-[180px]'>
-                          <SelectValue placeholder='Seleccione un rol' />
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Seleccione un rol" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value='USER'>Usuario</SelectItem>
-                            <SelectItem value='ADMIN'>Administrador</SelectItem>
+                            <SelectItem value="USER">Usuario</SelectItem>
+                            <SelectItem value="ADMIN">Administrador</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -294,16 +294,16 @@ const Index = ({ id }: { id: string }) => {
                 )}
               />
 
-              <div className='flex justify-end gap-5'>
+              <div className="flex justify-end gap-5">
                 <Button
-                  type='submit'
-                  className='px-6 py-2 font-medium rounded-md shadow'
+                  type="submit"
+                  className="px-6 py-2 font-medium rounded-md shadow"
                 >
                   Guardar
                 </Button>
                 <Button
-                  variant='outline'
-                  type='button'
+                  variant="outline"
+                  type="button"
                   onClick={handleRedirect}
                 >
                   Cancelar
@@ -314,7 +314,7 @@ const Index = ({ id }: { id: string }) => {
         </CardContent>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index

@@ -1,8 +1,11 @@
-import { gql } from 'apollo-server-micro';
+import { gql } from 'apollo-server-micro'
 
 const CustomTransactionsTypes = gql`
   type Mutation {
-    upsertTransaction(data: TransactionInput, where: TransactionWhereUniqueInput!): Transaction
+    upsertTransaction(
+      data: TransactionInput
+      where: TransactionWhereUniqueInput!
+    ): Transaction
   }
   input TransactionInput {
     create: TransactionCreateInput
@@ -14,6 +17,6 @@ const CustomTransactionsTypes = gql`
     date: DateTime
     description: String
   }
-`;
+`
 
-export { CustomTransactionsTypes };
+export { CustomTransactionsTypes }

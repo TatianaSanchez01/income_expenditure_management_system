@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-micro';
+import { gql } from 'apollo-server-micro'
 
 const TransactionTypes = gql`
   type Transaction {
@@ -45,5 +45,5 @@ const TransactionTypes = gql`
 
     deleteTransaction(where: TransactionWhereUniqueInput!): Transaction
   }
-`;
-export { TransactionTypes };
+`
+export { TransactionTypes }

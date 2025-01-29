@@ -1,10 +1,10 @@
-import { ApolloClient, InMemoryCache, from, HttpLink } from '@apollo/client';
+import { ApolloClient, InMemoryCache, from, HttpLink } from '@apollo/client'
 
 declare global {
-  var apolloGlobal: ApolloClient<object>;
+  var apolloGlobal: ApolloClient<object>
 }
 
-let client: ApolloClient<object>;
+let client: ApolloClient<object>
 
 if (process.env.NODE_ENV === 'production') {
   client = new ApolloClient({
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production') {
       }),
     ]),
     connectToDevTools: true,
-  });
+  })
 } else {
   if (!global.apolloGlobal) {
     global.apolloGlobal = new ApolloClient({
@@ -29,8 +29,8 @@ if (process.env.NODE_ENV === 'production') {
         }),
       ]),
       connectToDevTools: true,
-    });
+    })
   }
-  client = global.apolloGlobal;
+  client = global.apolloGlobal
 }
-export { client };
+export { client }

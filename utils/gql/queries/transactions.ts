@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-micro';
+import { gql } from 'apollo-server-micro'
 
 const GET_TRANSACTIONS = gql`
   query Transactions {
@@ -13,7 +13,7 @@ const GET_TRANSACTIONS = gql`
       }
     }
   }
-`;
+`
 
 const GET_TRANSACTION_BY_ID = gql`
   query Transaction($transactionId: String!) {
@@ -24,7 +24,7 @@ const GET_TRANSACTION_BY_ID = gql`
       date
     }
   }
-`;
+`
 
 const GET_FINANCIAL_REPORT = gql`
   query Transactions {
@@ -37,6 +37,6 @@ const GET_FINANCIAL_REPORT = gql`
       }
     }
   }
-`;
+`
 
-export { GET_TRANSACTIONS, GET_TRANSACTION_BY_ID, GET_FINANCIAL_REPORT };
+export { GET_TRANSACTIONS, GET_TRANSACTION_BY_ID, GET_FINANCIAL_REPORT }

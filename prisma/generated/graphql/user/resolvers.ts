@@ -1,4 +1,4 @@
-import prisma from 'config/prisma';
+import prisma from 'config/prisma'
 
 const UserResolvers = {
   User: {
@@ -13,7 +13,7 @@ const UserResolvers = {
             },
           },
         },
-      });
+      })
     },
     sessions: async (parent: any, _: any) => {
       return await prisma.session.findMany({
@@ -26,7 +26,7 @@ const UserResolvers = {
             },
           },
         },
-      });
+      })
     },
     transactions: async (parent: any, _: any) => {
       return await prisma.transaction.findMany({
@@ -39,19 +39,19 @@ const UserResolvers = {
             },
           },
         },
-      });
+      })
     },
   },
   Query: {
     users: async () => {
-      return await prisma.user.findMany({});
+      return await prisma.user.findMany({})
     },
     user: async (_: any, args: any) => {
       return await prisma.user.findUnique({
         where: {
           id: args.id,
         },
-      });
+      })
     },
   },
   Mutation: {
@@ -61,7 +61,7 @@ const UserResolvers = {
           ...args.data,
           emailVerified: new Date(args.data.emailVerified).toISOString(),
         },
-      });
+      })
     },
     updateUser: async (_: any, args: any) => {
       return await prisma.user.update({
@@ -74,16 +74,16 @@ const UserResolvers = {
             emailVerified: new Date(args.data.emailVerified).toISOString(),
           }),
         },
-      });
+      })
     },
     deleteUser: async (_: any, args: any) => {
       return await prisma.user.delete({
         where: {
           id: args.where.id,
         },
-      });
+      })
     },
   },
-};
+}
 
-export { UserResolvers };
+export { UserResolvers }

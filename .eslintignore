@@ -8,6 +8,7 @@ tailwind.config.ts
 node_modules/**
 
 components/ui/*
+prisma/generated/**
 
 jest.config.ts
 

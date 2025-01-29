@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-micro';
+import { gql } from 'apollo-server-micro'
 
 const AccountTypes = gql`
   type Account {
@@ -65,5 +65,5 @@ const AccountTypes = gql`
 
     deleteAccount(where: AccountWhereUniqueInput!): Account
   }
-`;
-export { AccountTypes };
+`
+export { AccountTypes }

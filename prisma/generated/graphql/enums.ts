@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-micro';
+import { gql } from 'apollo-server-micro'
 
 const GQLEnums = gql`
   enum Enum_RoleName {
@@ -8,6 +8,6 @@ const GQLEnums = gql`
   input Enum_RoleNameInput {
     set: Enum_RoleName
   }
-`;
+`
 
-export { GQLEnums };
+export { GQLEnums }

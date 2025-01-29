@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-micro';
+import { gql } from 'apollo-server-micro'
 
 const UPSERT_TRANSACTION = gql`
   mutation UpsertTransaction(
@@ -12,7 +12,7 @@ const UPSERT_TRANSACTION = gql`
       date
     }
   }
-`;
+`
 
 const DELETE_TRANSACTION = gql`
   mutation DeleteTransaction($where: TransactionWhereUniqueInput!) {
@@ -21,6 +21,6 @@ const DELETE_TRANSACTION = gql`
       description
     }
   }
-`;
+`
 
-export { UPSERT_TRANSACTION, DELETE_TRANSACTION };
+export { UPSERT_TRANSACTION, DELETE_TRANSACTION }

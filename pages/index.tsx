@@ -1,6 +1,6 @@
-import HomeCard from '@/components/molecules/HomeCard';
-import Private from '@/components/organism/Private';
-import { Enum_RoleName } from '@prisma/client';
+import HomeCard from '@/components/molecules/HomeCard'
+import Private from '@/components/organism/Private'
+import { Enum_RoleName } from '@prisma/client'
 
 const pages = [
   {
@@ -26,15 +26,14 @@ const pages = [
     allowedRoles: [Enum_RoleName.ADMIN],
     icon: 'chart-bar',
   },
-];
+]
 
 export default function Home() {
   return (
     <>
       {pages.map((page) => (
-        <Private allowedRoles={page.allowedRoles}>
+        <Private allowedRoles={page.allowedRoles} key={page.title}>
           <HomeCard
-            key={page.title}
             title={page.title}
             description={page.description}
             url={page.url}
@@ -43,5 +42,5 @@ export default function Home() {
         </Private>
       ))}
     </>
-  );
+  )
 }

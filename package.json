@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && prisma generate",
+    "build": "next build",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
+    "prisma:generate": "prisma generate",
     "cosmo": "cosmo && prettier --config .prettierrc prisma/generated/graphql/**/*.ts --write"
   },
   "dependencies": {

@@ -1,4 +1,4 @@
-import prisma from 'config/prisma';
+import prisma from 'config/prisma'
 
 const SessionResolvers = {
   Session: {
@@ -7,19 +7,19 @@ const SessionResolvers = {
         where: {
           id: parent.userId,
         },
-      });
+      })
     },
   },
   Query: {
     sessions: async () => {
-      return await prisma.session.findMany({});
+      return await prisma.session.findMany({})
     },
     session: async (_: any, args: any) => {
       return await prisma.session.findUnique({
         where: {
           id: args.id,
         },
-      });
+      })
     },
   },
   Mutation: {
@@ -29,7 +29,7 @@ const SessionResolvers = {
           ...args.data,
           expires: new Date(args.data.expires).toISOString(),
         },
-      });
+      })
     },
     updateSession: async (_: any, args: any) => {
       return await prisma.session.update({
@@ -42,16 +42,16 @@ const SessionResolvers = {
             expires: new Date(args.data.expires).toISOString(),
           }),
         },
-      });
+      })
     },
     deleteSession: async (_: any, args: any) => {
       return await prisma.session.delete({
         where: {
           id: args.where.id,
         },
-      });
+      })
     },
   },
-};
+}
 
-export { SessionResolvers };
+export { SessionResolvers }

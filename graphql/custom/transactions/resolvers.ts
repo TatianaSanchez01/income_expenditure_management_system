@@ -1,4 +1,4 @@
-import prisma from '@/config/prisma';
+import prisma from '@/config/prisma'
 
 const TransactionCustomResolvers = {
   User: {},
@@ -9,9 +9,9 @@ const TransactionCustomResolvers = {
         create: args.data.create,
         update: args.data.update,
         where: args.where,
-      });
+      })
     },
   },
-};
+}
 
-export { TransactionCustomResolvers };
+export { TransactionCustomResolvers }

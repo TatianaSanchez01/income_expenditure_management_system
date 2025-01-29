@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-micro';
+import { gql } from 'apollo-server-micro'
 
 export const CREATE_USER = gql`
   mutation CreateUserCustom($data: UserCustomInput) {
@@ -7,7 +7,7 @@ export const CREATE_USER = gql`
       name
     }
   }
-`;
+`
 
 export const UPDATE_USER = gql`
   mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput) {
@@ -17,7 +17,7 @@ export const UPDATE_USER = gql`
       email
     }
   }
-`;
+`
 
 export const DELETE_USER = gql`
   mutation DeleteUser($where: UserWhereUniqueInput!) {
@@ -25,4 +25,4 @@ export const DELETE_USER = gql`
       name
     }
   }
-`;
+`

@@ -68,7 +68,7 @@ El objetivo de esta prueba técnica es evaluar tus habilidades en el desarrollo 
   - **Backend:**
     - API GraphQL con Apollo Server implementada en una ruta de API de Next.js.
     - Base de datos de Postgres en Supabase.
-  - **Protección de Datos:** 
+  - **Protección de Datos:**
     - Implementar control de acceso basado en roles (RBAC) para asegurar que solo los usuarios autorizados puedan acceder a ciertas funcionalidades y datos.
     - Proteger el backend para que rechace conexiones no autenticadas.
   - **Autenticación:**

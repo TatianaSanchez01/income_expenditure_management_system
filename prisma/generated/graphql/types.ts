@@ -1,9 +1,9 @@
-import { gql } from 'apollo-server-micro';
-import { UserTypes } from './user/types';
-import { AccountTypes } from './account/types';
-import { SessionTypes } from './session/types';
-import { VerificationTokenTypes } from './verificationtoken/types';
-import { TransactionTypes } from './transaction/types';
+import { gql } from 'apollo-server-micro'
+import { UserTypes } from './user/types'
+import { AccountTypes } from './account/types'
+import { SessionTypes } from './session/types'
+import { VerificationTokenTypes } from './verificationtoken/types'
+import { TransactionTypes } from './transaction/types'
 
 const genericTypes = gql`
   scalar DateTime
@@ -29,7 +29,7 @@ const genericTypes = gql`
   input DecimalInput {
     set: Decimal
   }
-`;
+`
 
 export const types = [
   genericTypes,
@@ -38,4 +38,4 @@ export const types = [
   SessionTypes,
   VerificationTokenTypes,
   TransactionTypes,
-];
+]

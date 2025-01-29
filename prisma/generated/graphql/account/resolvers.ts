@@ -1,4 +1,4 @@
-import prisma from 'config/prisma';
+import prisma from 'config/prisma'
 
 const AccountResolvers = {
   Account: {
@@ -7,43 +7,43 @@ const AccountResolvers = {
         where: {
           id: parent.userId,
         },
-      });
+      })
     },
   },
   Query: {
     accounts: async () => {
-      return await prisma.account.findMany({});
+      return await prisma.account.findMany({})
     },
     account: async (_: any, args: any) => {
       return await prisma.account.findUnique({
         where: {
           id: args.id,
         },
-      });
+      })
     },
   },
   Mutation: {
     createAccount: async (_: any, args: any) => {
       return await prisma.account.create({
         data: { ...args.data },
-      });
+      })
     },
     updateAccount: async (_: any, args: any) => {
       return await prisma.account.update({
         where: {
-          id: args.where.id,
+          id: args.id,
         },
         data: { ...args.data },
-      });
+      })
     },
     deleteAccount: async (_: any, args: any) => {
       return await prisma.account.delete({
         where: {
           id: args.where.id,
         },
-      });
+      })
     },
   },
-};
+}
 
-export { AccountResolvers };
+export { AccountResolvers }

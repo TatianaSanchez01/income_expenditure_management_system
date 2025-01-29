@@ -1,17 +1,17 @@
-import prisma from 'config/prisma';
+import prisma from 'config/prisma'
 
 const VerificationTokenResolvers = {
   VerificationToken: {},
   Query: {
     verificationTokens: async () => {
-      return await prisma.verificationToken.findMany({});
+      return await prisma.verificationToken.findMany({})
     },
     verificationToken: async (_: any, args: any) => {
       return await prisma.verificationToken.findUnique({
         where: {
           id: args.id,
         },
-      });
+      })
     },
   },
   Mutation: {
@@ -21,7 +21,7 @@ const VerificationTokenResolvers = {
           ...args.data,
           expires: new Date(args.data.expires).toISOString(),
         },
-      });
+      })
     },
     updateVerificationToken: async (_: any, args: any) => {
       return await prisma.verificationToken.update({
@@ -34,16 +34,16 @@ const VerificationTokenResolvers = {
             expires: new Date(args.data.expires).toISOString(),
           }),
         },
-      });
+      })
     },
     deleteVerificationToken: async (_: any, args: any) => {
       return await prisma.verificationToken.delete({
         where: {
           id: args.where.id,
         },
-      });
+      })
     },
   },
-};
+}
 
-export { VerificationTokenResolvers };
+export { VerificationTokenResolvers }

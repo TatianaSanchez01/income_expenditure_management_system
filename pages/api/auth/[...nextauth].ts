@@ -1,8 +1,8 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
-import Auth0Provider from 'next-auth/providers/auth0';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '@/config/prisma';
+import NextAuth, { NextAuthOptions } from 'next-auth'
+import Auth0Provider from 'next-auth/providers/auth0'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { NextApiRequest, NextApiResponse } from 'next'
+import prisma from '@/config/prisma'
 
 const options: NextAuthOptions = {
   callbacks: {
@@ -17,12 +17,12 @@ const options: NextAuthOptions = {
         orderBy: {
           expires: 'desc',
         },
-      })) as any;
+      })) as any
       return {
         ...session,
         user: newSession?.user,
         token: newSession?.sessionToken,
-      };
+      }
     },
   },
   providers: [
@@ -36,8 +36,8 @@ const options: NextAuthOptions = {
   ],
   secret: process.env.AUTH0_CLIENT_SECRET,
   adapter: PrismaAdapter(prisma),
-};
+}
 
 export default (req: NextApiRequest, res: NextApiResponse) =>
-  NextAuth(req, res, options);
-export { options };
+  NextAuth(req, res, options)
+export { options }

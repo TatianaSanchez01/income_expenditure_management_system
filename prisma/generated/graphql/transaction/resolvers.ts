@@ -1,4 +1,4 @@
-import prisma from 'config/prisma';
+import prisma from 'config/prisma'
 
 const TransactionResolvers = {
   Transaction: {
@@ -7,26 +7,26 @@ const TransactionResolvers = {
         where: {
           id: parent.userId,
         },
-      });
+      })
     },
   },
   Query: {
     transactions: async () => {
-      return await prisma.transaction.findMany({});
+      return await prisma.transaction.findMany({})
     },
     transaction: async (_: any, args: any) => {
       return await prisma.transaction.findUnique({
         where: {
           id: args.id,
         },
-      });
+      })
     },
   },
   Mutation: {
     createTransaction: async (_: any, args: any) => {
       return await prisma.transaction.create({
         data: { ...args.data, date: new Date(args.data.date).toISOString() },
-      });
+      })
     },
     updateTransaction: async (_: any, args: any) => {
       return await prisma.transaction.update({
@@ -39,16 +39,16 @@ const TransactionResolvers = {
             date: new Date(args.data.date).toISOString(),
           }),
         },
-      });
+      })
     },
     deleteTransaction: async (_: any, args: any) => {
       return await prisma.transaction.delete({
         where: {
           id: args.where.id,
         },
-      });
+      })
     },
   },
-};
+}
 
-export { TransactionResolvers };
+export { TransactionResolvers }

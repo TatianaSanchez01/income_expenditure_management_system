@@ -1,24 +1,23 @@
-import React from 'react';
-import { useSession } from 'next-auth/react';
-import { Enum_RoleName } from '@prisma/client';
+import React from 'react'
+import { useSession } from 'next-auth/react'
+import { Enum_RoleName } from '@prisma/client'
 
 function Private({
   children,
   allowedRoles,
 }: {
-  children: React.ReactNode;
-  allowedRoles: Enum_RoleName[];
+  children: React.ReactNode
+  allowedRoles: Enum_RoleName[]
 }) {
-  const { data: session, status } = useSession() as any;
+  const { data: session, status } = useSession() as any
 
-  const role = session?.user?.role;
+  const role = session?.user?.role
 
-  if (allowedRoles.includes(role)){
-    return <div>{children}</div>;
+  if (allowedRoles.includes(role)) {
+    return <div>{children}</div>
+  } else {
+    return <></>
   }
-   else {
-    return <></>;
-   }
 }
 
-export default Private;
+export default Private

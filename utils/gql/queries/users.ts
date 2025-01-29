@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-micro';
+import { gql } from 'apollo-server-micro'
 
 const GET_USERS = gql`
   query Users {
@@ -9,7 +9,7 @@ const GET_USERS = gql`
       phone
     }
   }
-`;
+`
 
 const GET_USER_BY_ID = gql`
   query User($userId: String!) {
@@ -19,7 +19,7 @@ const GET_USER_BY_ID = gql`
       role
     }
   }
-`;
+`
 
 const GET_USER_BY_EMAIL = gql`
   query GetUserByEmail($email: String) {
@@ -27,6 +27,6 @@ const GET_USER_BY_EMAIL = gql`
       id
     }
   }
-`;
+`
 
-export { GET_USERS, GET_USER_BY_ID, GET_USER_BY_EMAIL };
+export { GET_USERS, GET_USER_BY_ID, GET_USER_BY_EMAIL }
