@@ -55,7 +55,7 @@ function IngresosGastos() {
     })
       .then((data) => {
         console.log('success')
-        const response = data.data.deleteUser
+        const response = data.data.deleteTransaction
         toast({
           variant: 'default',
           title: 'La transacción fue eliminada con éxito.',
