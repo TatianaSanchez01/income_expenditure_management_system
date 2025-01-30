@@ -29,7 +29,7 @@ import { useToast } from '@/hooks/use-toast'
 
 const FormSchema = z.object({
   amount: z.number(),
-  description: z.string().trim().min(1, 'Ingrese un descripción válido'),
+  description: z.string(),
   date: z.string().date(),
 })
 
@@ -108,6 +108,7 @@ const Index = ({ id }: { id: string }) => {
   }, [transaction])
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
+    console.log(date)
     const formData = {
       amount: values.amount,
       description: values.description,
@@ -139,7 +140,6 @@ const Index = ({ id }: { id: string }) => {
       },
     })
       .then(() => {
-        console.log('success')
         toast({
           variant: 'default',
           title: isNewTransaction
@@ -152,7 +152,6 @@ const Index = ({ id }: { id: string }) => {
         router.push('/ingresos-gastos')
       })
       .catch((error) => {
-        console.log(error)
         toast({
           variant: 'destructive',
           title: 'Uh oh! Something went wrong.',

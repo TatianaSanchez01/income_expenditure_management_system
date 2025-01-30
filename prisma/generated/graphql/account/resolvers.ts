@@ -31,7 +31,7 @@ const AccountResolvers = {
     updateAccount: async (_: any, args: any) => {
       return await prisma.account.update({
         where: {
-          id: args.id,
+          id: args.where.id,
         },
         data: { ...args.data },
       })

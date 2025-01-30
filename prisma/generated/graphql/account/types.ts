@@ -2,6 +2,7 @@ import { gql } from 'apollo-server-micro'
 
 const AccountTypes = gql`
   type Account {
+    id: ID!
     userId: String!
     type: String!
     provider: String!
