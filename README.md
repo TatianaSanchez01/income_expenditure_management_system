@@ -1,12 +1,10 @@
-## Prueba Técnica para Desarrollador Fullstack Senior
+# Prueba Técnica para Desarrollador Fullstack Senior
 
-### Introducción
+## Introducción
 
-El objetivo de esta prueba técnica es evaluar tus habilidades en el desarrollo de una aplicación fullstack. Deberás implementar un sistema de gestión de ingresos y egresos, la gestión de usuarios y la generación de reportes. El proyecto cuenta con [wireframes](<https://www.figma.com/design/2PINjveveJJ9ZAAwxwNoRK/Wireframes-(Copy)?node-id=0-1&t=6q0Q0id8YnjH9fJt-1>) que pueden servir de guía para el candidato. Sin embargo, el diseño de la interfaz de usuario es libre.
+El objetivo de esta prueba técnica es evaluar tus habilidades en el desarrollo de una aplicación fullstack. Deberás implementar un sistema de gestión de ingresos y egresos, la gestión de usuarios y la generación de reportes.
 
-### Requisitos del Proyecto
-
-#### Funcionalidades Principales
+## Funcionalidades Principales del Proyecto
 
 1. **Roles y Permisos**
 
@@ -30,12 +28,15 @@ El objetivo de esta prueba técnica es evaluar tus habilidades en el desarrollo 
        - Fecha
        - Usuario
      - Botón "Nuevo" para agregar un nuevo ingreso o egreso (solo para administradores).
+     - Botón "Editar" para editar un ingreso o egreso (solo para administradores).
+     - Botón "Eliminar" para eliminar un registro (solo para administradores).
    - **Formulario de Nuevo Ingreso/Egreso**
      - Formulario con los campos:
        - Monto
        - Concepto
        - Fecha
      - Botón para guardar el nuevo movimiento.
+     - Botón para cancelar movimiento.
 
 4. **Gestión de Usuarios** (solo para administradores)
 
@@ -44,19 +45,28 @@ El objetivo de esta prueba técnica es evaluar tus habilidades en el desarrollo 
        - Nombre
        - Correo
        - Teléfono
-       - Acciones (editar usuario)
+       - Acciones (editar usuario, eliminar usuario)
    - **Formulario de Edición de Usuario**
      - Formulario con los campos:
        - Nombre
        - Rol
      - Botón para guardar los cambios.
+     - Botón para cancelar los cambios.
+   - **Formulario de Nuevo Usuario**
+     - Formulario con los campos:
+       - Nombre
+       - Correo
+       - Teléfono
+       - Rol
+     - Botón para guardar los cambios.
+     - Botón para canceñar los cambios.
 
 5. **Reportes** (solo para administradores)
    - Mostrar un gráfico de movimientos financieros.
    - Mostrar el saldo actual.
    - Botón para descargar el reporte en formato CSV.
 
-### Requisitos Técnicos
+## Aspectos Técnicos
 
 - **Tecnologías y Herramientas:**
   - **Frontend:**
@@ -74,51 +84,52 @@ El objetivo de esta prueba técnica es evaluar tus habilidades en el desarrollo 
   - **Autenticación:**
     - Utilizar [Authjs](https://authjs.dev/) con [Auth0](https://auth0.com/) como proveedor y [Prisma](https://prisma.io) como adaptador para la autenticación por sesiones de base de datos.
   - **Pruebas unitarias**
-    - El candidato debe agregar al menos 3 pruebas unitarias donde considere necesario.
+    - Se agregaron 3 pruebas unitarias con [Jest](https://jestjs.io/).
   - **Despliegue:**
-    - Desplegar el proyecto en Vercel.
+    - Despliegue del proyecto en Vercel.
 
-### Entregables
+## Como desplegar el proyecto en local
 
-1. **Código Fuente:**
+  1. Clonar el repositorio:
 
-   - Repositorio en GitHub con el código fuente del proyecto.
-   - Incluir un archivo README con instrucciones claras sobre cómo ejecutar el proyecto localmente y cómo desplegarlo en Vercel.
+    ```bash
+    git clone https://github.com/TatianaSanchez01/income_expenditure_management_system.git
+    ```
 
-2. **Despliegue:**
-   - Proyecto desplegado en Vercel con la URL proporcionada.
+  2. Instalar las dependencias:
 
-### Criterios de Evaluación
+    ```bash
+    cd income_expenditure_management_system
+    npm install
+    ```
 
-- **Funcionalidad:**
+  3. Ejecutar las migraciones:
 
-  - Cumplimiento de todos los requisitos funcionales.
-  - Correcta implementación del CRUD para ingresos, egresos y usuarios.
-  - Generación y descarga de reportes en formato CSV.
+    ```bash
+    npx prisma migrate dev
+    ```
+  4. Iniciar el servidor:
 
-- **Calidad del Código:**
+    ```bash
+    npm run dev
+    ```
+  5. Acceder a `http://localhost:3000` en tu navegador.
 
-  - Calidad y claridad del código.
-  - Uso adecuado de las mejores prácticas de desarrollo.
-  - Estructura del proyecto.
+## Como desplegar el proyecto en vercel
 
-- **Diseño y UX:**
+  1. Crear una cuenta en [Vercel](https://vercel.com/).
+  2. Instalar [Vercel CLI](https://vercel.com/download).
+  3. Iniciar sesión en Vercel CLI:
 
-  - Usabilidad de la interfaz.
-  - Implementación de un diseño atractivo.
+    ```bash
+    vercel login
+    ```
+  4. Desplegar el proyecto:
 
-- **Pruebas y Documentación:**
-
-  - Cobertura de pruebas unitarias.
-  - Calidad de los comentarios dentro del proyecto.
-
-- **Seguridad:**
-
-  - Implementación efectiva de control de acceso basado en roles (RBAC).
-  - Protección adecuada de los datos sensibles.
-
-- **Notas**:
-  - El aplicativo no debe contener diseño responsivo.
-  - El candidato puede utilizar el código cargado en este repositorio. Sin embargo, esta no es una condición necesaria y el candidato puede iniciar el proyecto de 0 si lo desea.
-  - El candidato puede cambiar las versiones de las librerías si lo considera necesario.
-  - El candidato debe compartir el acceso al repositorio de GitHub al correo dsaldarriaga@prevalentware.com
+    ```bash
+    vercel
+    ```
+  5. Configurar las variables de entorno en Vercel.
+    5.2 Cambiar la variable `NEXTAUTH_URL` por la URL proporcionada por Vercel.
+  6. Configurar el acceso del despliegue en Auth0.
+  7. Acceder a la URL proporcionada por Vercel.
