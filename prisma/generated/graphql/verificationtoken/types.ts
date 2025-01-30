@@ -2,6 +2,7 @@ import { gql } from 'apollo-server-micro'
 
 const VerificationTokenTypes = gql`
   type VerificationToken {
+    id: ID!
     identifier: String!
     token: String!
     expires: DateTime!

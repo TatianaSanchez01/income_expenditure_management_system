@@ -2,6 +2,7 @@ import { gql } from 'apollo-server-micro'
 
 const SessionTypes = gql`
   type Session {
+    id: ID!
     sessionToken: String!
     userId: String!
     expires: DateTime!
