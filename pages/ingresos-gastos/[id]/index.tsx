@@ -86,7 +86,7 @@ const Index = ({ id }: { id: string }) => {
     defaultValues: {
       amount: 0,
       description: '',
-      date: new Date().toISOString(),
+      date: new Date().toISOString().slice(0, 10),
     },
   })
 
@@ -108,7 +108,8 @@ const Index = ({ id }: { id: string }) => {
   }, [transaction])
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(date)
+    console.log('Fecha enviada:', values.date)
+
     const formData = {
       amount: values.amount,
       description: values.description,
@@ -282,7 +283,7 @@ const Index = ({ id }: { id: string }) => {
                         onChange={(e) => {
                           const newDate = new Date(e.target.value)
                           setDate(newDate)
-                          field.onChange(newDate.toISOString())
+                          field.onChange(e.target.value);
                         }}
                       />
                     </FormControl>

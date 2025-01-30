@@ -153,6 +153,7 @@ const Index = ({ id }: { id: string }) => {
         title: 'Usuario actualizado con éxito.',
         description: `El usuario ${values.name} ha sido actualizado correctamente.`,
       })
+      router.push('/usuarios')
     }
   }
 
@@ -281,8 +282,8 @@ const Index = ({ id }: { id: string }) => {
                     <FormLabel>Rol</FormLabel>
                     <FormControl>
                       <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        onValueChange={(value) => field.onChange(value)}
+                        value={field.value}
                       >
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Seleccione un rol" />
