@@ -124,6 +124,12 @@ const Index = ({ id }: { id: string }) => {
       update: formData,
     }
 
+    toast({
+      variant: 'default',
+      title: 'Procesando...',
+      description: 'Por favor, espere mientras se procesa la transacción.',
+    })
+
     await upsertTransaction({
       variables: {
         where: {

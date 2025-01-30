@@ -14,7 +14,7 @@ function Private({
   const role = session?.user?.role
 
   if (allowedRoles.includes(role)) {
-    return <div>{children}</div>
+    return <>{children}</>
   } else {
     return <></>
   }

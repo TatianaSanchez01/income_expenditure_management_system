@@ -1,4 +1,4 @@
-import HomeCard from '@/components/molecules/HomeCard'
+import HomeCard from '@/components/atoms/HomeCard'
 import Private from '@/components/organism/Private'
 import { Enum_RoleName } from '@prisma/client'
 

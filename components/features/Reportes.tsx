@@ -81,7 +81,7 @@ function Reportes() {
 
     toast({
       variant: 'default',
-      title: 'El reporte con éxito.',
+      title: 'El reporte se generó con éxito.',
       description: 'El archivo csv fue generado con éxito.',
     })
   }
@@ -99,7 +99,16 @@ function Reportes() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ReportChart chartData={chartData} />
+            {loading ? (
+              <ReactLoading
+                type="bubbles"
+                color="#3B82F6"
+                height={'20%'}
+                width={'20%'} 
+              />
+            ) : (
+              <ReportChart chartData={chartData} />
+            )}
           </CardContent>
         </Card>
       </div>

@@ -85,6 +85,12 @@ const Index = ({ id }: { id: string }) => {
     if (isNewUser) {
       const password = nanoid()
       try {
+        toast({
+          variant: 'default',
+          title: 'Procesando...',
+          description: 'Por favor, espere mientras se procesa la información.',
+        })
+
         await createUser({
           name: values.name,
           email: values.email,
